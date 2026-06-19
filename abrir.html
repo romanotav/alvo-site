@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Abrir no Alvo</title>
+  <!-- Preview ao compartilhar (WhatsApp, etc.) -->
+  <meta property="og:title" content="Alvø — agenda de corridas" />
+  <meta property="og:description" content="Abra esta corrida no app Alvø." />
+  <meta name="theme-color" content="#0a0a0a" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      height: 100%;
+      background: #0a0a0a;
+      color: #fff;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .wrap {
+      min-height: 100%;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 32px 24px; gap: 8px;
+    }
+    .logo { font-size: 40px; font-weight: 800; letter-spacing: 1px; margin-bottom: 8px; }
+    h1 { font-size: 20px; font-weight: 700; }
+    p { color: rgba(255,255,255,0.6); font-size: 15px; line-height: 1.5; max-width: 320px; margin: 4px 0 20px; }
+    .btn {
+      display: block; width: 100%; max-width: 320px;
+      padding: 15px 20px; border-radius: 14px;
+      font-size: 16px; font-weight: 800; text-decoration: none;
+      margin-bottom: 12px;
+    }
+    .btn-primary { background: #C0E030; color: #0a0a0a; }
+    .btn-secondary { background: rgba(255,255,255,0.08); color: #fff; border: 1px solid rgba(255,255,255,0.15); }
+    .hint { color: rgba(255,255,255,0.35); font-size: 12px; margin-top: 8px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="logo">ALVØ</div>
+    <h1>Abrindo sua corrida…</h1>
+    <p>Se você já tem o Alvø instalado, o app vai abrir. Senão, baixe pela App Store.</p>
+    <a id="abrir" class="btn btn-primary" href="#">Abrir no Alvø</a>
+    <a id="appstore" class="btn btn-secondary" href="https://apps.apple.com/app/id6780298704">Baixar na App Store</a>
+    <div class="hint">Você será redirecionado em instantes…</div>
+  </div>
+
+  <script>
+    (function () {
+      var APP_STORE = "https://apps.apple.com/app/id6780298704";
+      var params = new URLSearchParams(location.search);
+      var id = (params.get("p") || "").replace(/[^0-9]/g, "");
+      var appLink = id ? "alvo://prova/" + id : "alvo://";
+
+      document.getElementById("abrir").setAttribute("href", appLink);
+      document.getElementById("appstore").setAttribute("href", APP_STORE);
+
+      // Tenta abrir o app; se não abrir (não instalado), cai na App Store.
+      var caiuFora = false;
+      function irAppStore() { if (!caiuFora) { caiuFora = true; location.href = APP_STORE; } }
+
+      // Se a aba perder foco, é sinal de que o app abriu — cancela o fallback.
+      document.addEventListener("visibilitychange", function () {
+        if (document.hidden) caiuFora = true;
+      });
+      window.addEventListener("pagehide", function () { caiuFora = true; });
+
+      // Dispara a tentativa de abrir o app
+      setTimeout(function () { window.location.href = appLink; }, 100);
+      // Fallback para a App Store
+      setTimeout(irAppStore, 1600);
+    })();
+  </script>
+</body>
+</html>
