@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Perfil no Alvø</title>
+  <meta property="og:title" content="Alvø — agenda de corridas" />
+  <meta property="og:description" content="Veja as próximas corridas desta pessoa no Alvø." />
+  <meta name="theme-color" content="#0a0a0a" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      min-height: 100%;
+      background: #0a0a0a;
+      color: #fff;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .wrap { max-width: 420px; margin: 0 auto; padding: 28px 22px 40px; }
+    .marca { color: #C0E030; font-size: 15px; font-weight: 900; letter-spacing: 2px; margin-bottom: 26px; }
+
+    .pessoa { display: flex; align-items: center; gap: 14px; margin-bottom: 8px; }
+    .avatar {
+      width: 60px; height: 60px; border-radius: 30px; flex-shrink: 0;
+      background: #C0E030; color: #000; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 25px; font-weight: 800;
+    }
+    .avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .nome { font-size: 21px; font-weight: 800; }
+    .usuario { color: rgba(255,255,255,0.4); font-size: 14px; margin-top: 2px; }
+
+    .titulo {
+      color: rgba(255,255,255,0.5); font-size: 12px; font-weight: 800;
+      letter-spacing: 0.8px; text-transform: uppercase;
+      margin: 28px 0 12px;
+    }
+
+    .item {
+      display: flex; align-items: center; gap: 12px;
+      background: rgba(255,255,255,0.05); border-radius: 14px;
+      padding: 12px; margin-bottom: 10px;
+    }
+    .data {
+      width: 46px; flex-shrink: 0; text-align: center;
+      background: rgba(192,224,48,0.12); border-radius: 10px; padding: 6px 0;
+    }
+    .data .dia { color: #C0E030; font-size: 18px; font-weight: 900; line-height: 1.1; }
+    .data .mes { color: #C0E030; font-size: 9px; font-weight: 800; letter-spacing: 0.5px; }
+    .info { min-width: 0; flex: 1; }
+    .info .n { font-size: 14px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .info .l { color: rgba(255,255,255,0.4); font-size: 12px; margin-top: 2px; }
+    .dist {
+      background: rgba(255,255,255,0.09); border-radius: 8px;
+      padding: 4px 8px; font-size: 11px; font-weight: 700;
+      color: rgba(255,255,255,0.75); flex-shrink: 0;
+    }
+
+    .vazio { color: rgba(255,255,255,0.4); font-size: 14px; line-height: 1.5; }
+
+    .acoes { margin-top: 28px; }
+    .btn {
+      display: block; width: 100%;
+      padding: 15px 20px; border-radius: 14px;
+      font-size: 16px; font-weight: 800; text-decoration: none;
+      text-align: center; margin-bottom: 12px;
+    }
+    .btn-primary { background: #C0E030; color: #0a0a0a; }
+    .btn-secondary { background: rgba(255,255,255,0.08); color: #fff; border: 1px solid rgba(255,255,255,0.15); }
+    .hint { color: rgba(255,255,255,0.3); font-size: 12px; text-align: center; margin-top: 6px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="marca">ALVØ</div>
+    <div id="conteudo">
+      <div class="vazio">Carregando…</div>
+    </div>
+    <div class="acoes">
+      <a id="abrir" class="btn btn-primary" href="alvo://">Abrir no Alvø</a>
+      <a class="btn btn-secondary" href="https://apps.apple.com/app/id6780298704">Baixar na App Store</a>
+      <div class="hint">Agenda de corridas de rua, trail, triatlo e ciclismo.</div>
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    // Chave pública (anon) — a mesma que vai dentro do app. As políticas do banco
+    // é que decidem o que ela enxerga: só perfis e provas públicas do catálogo.
+    var SB = "https://smibeuvxyrvtezktqsqq.supabase.co";
+    var KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNtaWJldXZ4eXJ2dGV6a3Rxc3FxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgxMTA2MDEsImV4cCI6MjA5MzY4NjYwMX0.qEUXzWW0DGui-BXSCflSeu9dyBiRuntiwStfYM74_tw";
+    var MESES = ["", "JAN", "FEV", "MAR", "ABR", "MAI", "JUN", "JUL", "AGO", "SET", "OUT", "NOV", "DEZ"];
+    var MAX = 8;
+
+    var conteudo = document.getElementById("conteudo");
+    var usuario = (new URLSearchParams(location.search).get("u") || "").replace(/[^A-Za-z0-9_.-]/g, "");
+
+    if (usuario) document.getElementById("abrir").setAttribute("href", "alvo://perfil/" + usuario);
+
+    function esc(s) {
+      return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+        return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+      });
+    }
+
+    function api(caminho) {
+      return fetch(SB + "/rest/v1/" + caminho, {
+        headers: { apikey: KEY, Authorization: "Bearer " + KEY }
+      }).then(function (r) { return r.json(); });
+    }
+
+    function erro(msg) {
+      conteudo.innerHTML = '<div class="vazio">' + esc(msg) + "</div>";
+    }
+
+    if (!usuario) {
+      erro("Perfil não encontrado.");
+      return;
+    }
+
+    api("profiles?usuario=eq." + encodeURIComponent(usuario) + "&select=id,nome,usuario,avatar_url&limit=1")
+      .then(function (perfis) {
+        if (!perfis || !perfis.length) throw new Error("sem perfil");
+        var p = perfis[0];
+
+        var inicial = esc((p.nome || "A").charAt(0).toUpperCase());
+        var avatar = p.avatar_url
+          ? '<div class="avatar"><img src="' + esc(p.avatar_url) + '" alt=""></div>'
+          : '<div class="avatar">' + inicial + "</div>";
+
+        var cabecalho =
+          '<div class="pessoa">' + avatar +
+          '<div><div class="nome">' + esc(p.nome || "Corredor") + "</div>" +
+          '<div class="usuario">@' + esc(p.usuario) + "</div></div></div>";
+
+        var hoje = new Date().toISOString().split("T")[0];
+
+        return api("user_provas?user_id=eq." + p.id + "&alvo=eq.true&select=prova_id,distancia_alvo")
+          .then(function (ups) {
+            if (!ups || !ups.length) return { cabecalho: cabecalho, provas: [], dist: {} };
+            var dist = {};
+            var ids = ups.map(function (u) { dist[u.prova_id] = u.distancia_alvo; return u.prova_id; });
+            // Provas privadas de outra pessoa não voltam nessa consulta (a política
+            // do banco as esconde) — some da lista sem quebrar nada.
+            return api(
+              "provas?id=in.(" + ids.join(",") + ")&data=gte." + hoje +
+              "&select=id,nome,cidade,pais,data&order=data.asc"
+            ).then(function (provas) {
+              return { cabecalho: cabecalho, provas: provas || [], dist: dist };
+            });
+          });
+      })
+      .then(function (r) {
+        var html = r.cabecalho;
+        if (!r.provas.length) {
+          html += '<div class="titulo">Próximos alvos</div>' +
+                  '<div class="vazio">Nenhuma corrida marcada por enquanto.</div>';
+        } else {
+          html += '<div class="titulo">' +
+                  (r.provas.length === 1 ? "Próximo alvo" : "Próximos alvos") + "</div>";
+          r.provas.slice(0, MAX).forEach(function (p) {
+            var partes = p.data.split("-");
+            var d = r.dist[p.id];
+            html +=
+              '<div class="item">' +
+                '<div class="data"><div class="dia">' + parseInt(partes[2], 10) + "</div>" +
+                '<div class="mes">' + MESES[parseInt(partes[1], 10)] + "</div></div>" +
+                '<div class="info"><div class="n">' + esc(p.nome) + "</div>" +
+                '<div class="l">' + esc(p.cidade || p.pais || "") + "</div></div>" +
+                (d ? '<div class="dist">' + esc(d) + "</div>" : "") +
+              "</div>";
+          });
+          if (r.provas.length > MAX) {
+            html += '<div class="hint">e mais ' + (r.provas.length - MAX) + " no app</div>";
+          }
+        }
+        conteudo.innerHTML = html;
+      })
+      .catch(function () {
+        erro("Não encontramos esse perfil.");
+      });
+  })();
+  </script>
+</body>
+</html>
