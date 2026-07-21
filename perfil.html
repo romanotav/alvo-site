@@ -37,10 +37,17 @@
     }
 
     .item {
-      display: flex; align-items: center; gap: 12px;
+      display: flex; align-items: flex-start; gap: 12px;
       background: rgba(255,255,255,0.05); border-radius: 14px;
       padding: 12px; margin-bottom: 10px;
     }
+    /* separador de ano: so aparece quando a lista cruza de um ano pro outro */
+    .ano {
+      display: flex; align-items: center; gap: 10px;
+      margin: 18px 0 12px;
+      color: rgba(255,255,255,0.45); font-size: 12px; font-weight: 800; letter-spacing: 1px;
+    }
+    .ano::after { content: ""; flex: 1; height: 1px; background: rgba(255,255,255,0.12); }
     .data {
       width: 46px; flex-shrink: 0; text-align: center;
       background: rgba(192,224,48,0.12); border-radius: 10px; padding: 6px 0;
@@ -48,8 +55,9 @@
     .data .dia { color: #C0E030; font-size: 18px; font-weight: 900; line-height: 1.1; }
     .data .mes { color: #C0E030; font-size: 9px; font-weight: 800; letter-spacing: 0.5px; }
     .info { min-width: 0; flex: 1; }
-    .info .n { font-size: 14px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .info .l { color: rgba(255,255,255,0.4); font-size: 12px; margin-top: 2px; }
+    /* nome quebra em ate 2 linhas em vez de cortar no "..." */
+    .info .n { font-size: 14px; font-weight: 700; line-height: 1.3; }
+    .info .l { color: rgba(255,255,255,0.4); font-size: 12px; margin-top: 3px; }
     .dist {
       background: rgba(255,255,255,0.09); border-radius: 8px;
       padding: 4px 8px; font-size: 11px; font-weight: 700;
@@ -158,9 +166,20 @@
         } else {
           html += '<div class="titulo">' +
                   (r.provas.length === 1 ? "Próximo alvo" : "Próximos alvos") + "</div>";
-          r.provas.slice(0, MAX).forEach(function (p) {
+          var mostradas = r.provas.slice(0, MAX);
+          // Só marca o ano quando a lista atravessa mais de um: numa lista toda
+          // de 2026 o rótulo seria ruído.
+          var varios = mostradas.some(function (p) {
+            return p.data.slice(0, 4) !== mostradas[0].data.slice(0, 4);
+          });
+          var anoAtual = null;
+          mostradas.forEach(function (p) {
             var partes = p.data.split("-");
             var d = r.dist[p.id];
+            if (varios && partes[0] !== anoAtual) {
+              anoAtual = partes[0];
+              html += '<div class="ano">' + anoAtual + "</div>";
+            }
             html +=
               '<div class="item">' +
                 '<div class="data"><div class="dia">' + parseInt(partes[2], 10) + "</div>" +
