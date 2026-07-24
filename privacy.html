@@ -74,7 +74,7 @@
     <div class="subtitle">Calendário de corridas e triathlons</div>
 
     <h1>Política de Privacidade</h1>
-    <div class="updated">Última atualização: junho de 2026</div>
+    <div class="updated">Última atualização: julho de 2026</div>
 
     <p>
       O <strong>Alvo</strong> é um aplicativo de calendário de corridas e triathlons. Esta política
@@ -89,35 +89,61 @@
       <li><strong>E-mail</strong> — usado exclusivamente para criar e autenticar a sua conta.</li>
       <li><strong>Nome e nome de usuário</strong> — definidos por você no perfil.</li>
       <li><strong>Foto de perfil</strong> — opcional. Enviada apenas se você escolher adicionar uma.</li>
+      <li><strong>Cidade</strong> — opcional, digitada por você. Usada para recomendar provas na sua região. Não é geolocalização: não acessamos o GPS do aparelho.</li>
       <li><strong>Provas favoritadas e alvos</strong> — para exibir sua agenda personalizada.</li>
+      <li><strong>Quem você segue</strong> — para montar sua rede e mostrar quando amigos marcam a mesma prova.</li>
+      <li><strong>Identificador de notificação (push token)</strong> — um código do aparelho, gerado pelo sistema, usado apenas para enviar as notificações do app.</li>
       <li><strong>Dados de uso (analytics)</strong> — eventos sobre como você usa o app (por exemplo: abrir o app, visualizar uma prova, marcar um alvo), usados de forma agregada para entender e melhorar o produto.</li>
     </ul>
-    <p>Não coletamos localização, contatos, histórico de navegação ou qualquer dado sensível.</p>
+    <p>Não coletamos localização por GPS, contatos, histórico de navegação ou qualquer dado sensível.</p>
 
     <h2>2. Como usamos seus dados</h2>
     <ul>
       <li>Autenticar sua conta e manter sua sessão ativa.</li>
       <li>Exibir sua agenda e provas favoritas.</li>
+      <li>Enviar notificações do app: lembretes das suas provas, novo seguidor, ou quando um amigo marca a mesma prova. Você pode desativá-las nas configurações do aparelho.</li>
       <li>Personalizar as recomendações do Alvinho, nosso assistente de corridas.</li>
     </ul>
     <p>Seus dados <strong>nunca são vendidos, alugados ou compartilhados</strong> com terceiros para fins comerciais.</p>
 
-    <h2>3. Armazenamento e segurança</h2>
+    <h2>3. O que fica visível para outros usuários</h2>
+    <p>
+      O Alvo tem uma dimensão social. As informações abaixo ficam visíveis para outras
+      pessoas que usam o app:
+    </p>
+    <ul>
+      <li>Seu <strong>nome, nome de usuário e foto de perfil</strong>.</li>
+      <li>Suas <strong>provas marcadas como alvo</strong> e as que você já concluiu.</li>
+      <li>Quem você <strong>segue</strong> e quem segue você.</li>
+    </ul>
+    <p>
+      Provas que você cadastra apenas como <strong>meta pessoal</strong> ficam visíveis só para
+      você. Já as provas que você envia para o catálogo público passam por moderação e, uma vez
+      aprovadas, ficam disponíveis para todos os usuários.
+    </p>
+
+    <h2>4. Armazenamento e segurança</h2>
     <p>
       Todos os dados são armazenados de forma segura na plataforma
       <strong>Supabase</strong> (infraestrutura baseada em PostgreSQL com criptografia em repouso e em trânsito).
       O acesso é protegido por políticas de segurança em nível de linha (Row Level Security).
       Os dados de uso (analytics) são processados pelo <strong>PostHog</strong>, com servidores na
-      <strong>União Europeia</strong>. Ambos atuam como operadores de dados em nosso nome.
+      <strong>União Europeia</strong>. As notificações são entregues pelo serviço de push da
+      <strong>Expo</strong>. Todos atuam como operadores de dados em nosso nome.
+    </p>
+    <p>
+      Quando você adiciona uma prova colando um link, o app pode copiar a imagem de capa do
+      evento (do site de inscrição) para o nosso armazenamento, apenas para ilustrar a prova no
+      catálogo. Isso não envolve dados pessoais seus.
     </p>
 
-    <h2>4. Retenção de dados</h2>
+    <h2>5. Retenção de dados</h2>
     <p>
       Seus dados são mantidos enquanto sua conta estiver ativa. Se você excluir sua conta,
       todos os seus dados pessoais serão removidos permanentemente de nossos servidores em até 30 dias.
     </p>
 
-    <h2>5. Seus direitos (LGPD)</h2>
+    <h2>6. Seus direitos (LGPD)</h2>
     <p>Você tem o direito de:</p>
     <ul>
       <li>Acessar os dados que temos sobre você.</li>
@@ -127,7 +153,7 @@
     </ul>
     <p>Para exercer qualquer um desses direitos, entre em contato pelo e-mail abaixo.</p>
 
-    <h2>6. Analytics e rastreamento</h2>
+    <h2>7. Analytics e rastreamento</h2>
     <p>
       O Alvo usa o <strong>PostHog</strong> para coletar métricas de uso (analytics) e entender como o
       app é utilizado, de forma agregada, com o objetivo de melhorá-lo. Coletamos eventos como abrir o
@@ -139,14 +165,14 @@
       analytics são usados exclusivamente por nós, internamente.
     </p>
 
-    <h2>7. Crianças e adolescentes</h2>
+    <h2>8. Crianças e adolescentes</h2>
     <p>
       O Alvo não é direcionado a menores de 13 anos. Não coletamos intencionalmente dados
       de crianças. Se você acredita que uma criança nos forneceu dados, entre em contato
       para que possamos removê-los.
     </p>
 
-    <h2>8. Alterações nesta política</h2>
+    <h2>9. Alterações nesta política</h2>
     <p>
       Eventuais atualizações serão publicadas nesta página com a data de revisão. Para mudanças
       relevantes, notificaremos os usuários pelo próprio aplicativo.
