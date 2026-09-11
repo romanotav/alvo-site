@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alvø — Todas as corridas num app só</title>
+  <meta name="description" content="O Alvø reúne todas as corridas do Brasil e do mundo num app só: corrida de rua, trail, triathlon, natação e ciclismo. Marque seus alvos, receba lembretes de inscrição e comemore cada medalha." />
+  <meta property="og:title" content="Alvø — Todas as corridas num app só" />
+  <meta property="og:description" content="Corrida de rua, trail, triathlon, natação e ciclismo. Do 5K à maratona, no Brasil e no mundo." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://alvoapp.com.br" />
+  <meta name="theme-color" content="#0f0f0f" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --verde: #C0E030; --bg: #0f0f0f; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: #e0e0e0;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    .wrap { max-width: 1000px; margin: 0 auto; padding: 0 24px; }
+
+    /* ---------- topo ---------- */
+    header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 22px 24px; max-width: 1000px; margin: 0 auto;
+    }
+    .logo { display: flex; align-items: center; gap: 10px; font-size: 22px; font-weight: 900; letter-spacing: -0.5px; color: #fff; }
+    .logo b { color: var(--verde); font-weight: 900; }
+    .logo img { width: 30px; height: 30px; border-radius: 8px; }
+    .nav-links { display: flex; gap: 22px; font-size: 14px; color: rgba(255,255,255,0.6); }
+    .nav-links a:hover { color: var(--verde); }
+
+    /* ---------- hero ---------- */
+    .hero {
+      position: relative; overflow: hidden;
+      padding: 70px 0 80px; text-align: center;
+    }
+    .hero::before {
+      content: ""; position: absolute; top: -200px; left: 50%; transform: translateX(-50%);
+      width: 700px; height: 500px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(192,224,48,0.16), transparent 65%);
+      pointer-events: none;
+    }
+    .eyebrow {
+      display: inline-block; font-size: 12px; font-weight: 800; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--verde);
+      border: 1px solid rgba(192,224,48,0.35); border-radius: 999px; padding: 6px 14px; margin-bottom: 24px;
+    }
+    .hero h1 {
+      font-size: clamp(34px, 6vw, 60px); font-weight: 900; color: #fff;
+      letter-spacing: -1.5px; line-height: 1.05; margin-bottom: 20px;
+    }
+    .hero h1 .g { color: var(--verde); }
+    .hero p.sub {
+      font-size: clamp(16px, 2.2vw, 20px); color: rgba(255,255,255,0.7);
+      max-width: 620px; margin: 0 auto 36px;
+    }
+    .cta {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--verde); color: #0a0a0a; font-weight: 800; font-size: 16px;
+      padding: 16px 30px; border-radius: 16px; transition: transform .15s ease, box-shadow .15s ease;
+      box-shadow: 0 10px 30px rgba(192,224,48,0.25);
+    }
+    .cta:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(192,224,48,0.35); }
+    .cta-note { display: block; margin-top: 14px; font-size: 13px; color: rgba(255,255,255,0.4); }
+
+    /* ---------- modalidades ---------- */
+    .tags { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 44px; }
+    .tag {
+      font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.75);
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 999px; padding: 8px 16px;
+    }
+
+    /* ---------- features ---------- */
+    .features { padding: 40px 0 20px; }
+    .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+    @media (max-width: 640px) { .grid { grid-template-columns: 1fr; } }
+    .card {
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 20px; padding: 28px;
+    }
+    .card .ico { font-size: 26px; margin-bottom: 14px; }
+    .card h3 { color: #fff; font-size: 18px; font-weight: 800; margin-bottom: 8px; }
+    .card p { color: rgba(255,255,255,0.6); font-size: 15px; }
+
+    /* ---------- faixa final ---------- */
+    .final { text-align: center; padding: 80px 0 40px; }
+    .final h2 { font-size: clamp(26px, 4vw, 38px); font-weight: 900; color: #fff; letter-spacing: -1px; margin-bottom: 14px; }
+    .final p { color: rgba(255,255,255,0.6); margin-bottom: 30px; }
+
+    /* ---------- rodapé ---------- */
+    footer { border-top: 1px solid rgba(255,255,255,0.08); margin-top: 40px; padding: 30px 0 50px; }
+    .foot-in { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; }
+    .foot-links { display: flex; gap: 22px; font-size: 14px; color: rgba(255,255,255,0.55); }
+    .foot-links a:hover { color: var(--verde); }
+    .copy { font-size: 13px; color: rgba(255,255,255,0.35); }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo"><img src="logo.png" alt="Alvø" onerror="this.style.display='none'" />ALV<b>Ø</b></div>
+    <nav class="nav-links">
+      <a href="#recursos">Recursos</a>
+      <a href="suporte.html">Suporte</a>
+      <a href="privacy.html">Privacidade</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="wrap">
+      <span class="eyebrow">Calendário de corridas</span>
+      <h1>Todas as corridas<br />num <span class="g">app só</span>.</h1>
+      <p class="sub">
+        Cansou de vasculhar mil sites pra achar uma prova? O Alvø reúne corridas de rua, trail,
+        triathlon, natação e ciclismo — do 5K à maratona, no Brasil e no mundo.
+      </p>
+      <a class="cta" href="#">Em breve na App Store 🍏</a>
+      <span class="cta-note">Estamos chegando. Fique de olho!</span>
+
+      <div class="tags">
+        <span class="tag">Corrida de rua</span>
+        <span class="tag">Trail</span>
+        <span class="tag">Triathlon</span>
+        <span class="tag">Natação</span>
+        <span class="tag">Ciclismo</span>
+        <span class="tag">5K · 10K · 21K · 42K</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="features wrap" id="recursos">
+    <div class="grid">
+      <div class="card">
+        <div class="ico">🎯</div>
+        <h3>Marque seus alvos</h3>
+        <p>Escolha as provas que vai correr. A gente te lembra do prazo de inscrição e faz a contagem regressiva até a largada.</p>
+      </div>
+      <div class="card">
+        <div class="ico">🔍</div>
+        <h3>Descubra provas</h3>
+        <p>Busque por cidade, distância, modalidade e data. Milhares de provas organizadas num só lugar.</p>
+      </div>
+      <div class="card">
+        <div class="ico">🏅</div>
+        <h3>Guarde cada conquista</h3>
+        <p>Registre suas provas concluídas com a foto da medalha, seu tempo e distância. Sua temporada, no seu perfil.</p>
+      </div>
+      <div class="card">
+        <div class="ico">👟</div>
+        <h3>Corra com amigos</h3>
+        <p>Siga outros corredores, veja quem vai correr com você e mande um parabéns nas conquistas deles.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="final wrap">
+    <h2>Menos tempo procurando.<br />Mais tempo correndo.</h2>
+    <p>Ache sua próxima prova com o Alvø.</p>
+    <a class="cta" href="#">Em breve na App Store 🍏</a>
+  </section>
+
+  <footer>
+    <div class="wrap foot-in">
+      <div class="logo" style="font-size:18px;">ALV<b>Ø</b></div>
+      <div class="foot-links">
+        <a href="suporte.html">Suporte</a>
+        <a href="privacy.html">Privacidade</a>
+        <a href="mailto:valeriaromanotav@gmail.com">Contato</a>
+      </div>
+      <div class="copy">© 2026 Alvø</div>
+    </div>
+  </footer>
+
+</body>
+</html>
