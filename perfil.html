@@ -95,6 +95,20 @@
     .conq-data { color: rgba(255,255,255,0.35); font-size: 11px; }
 
     .vazio { color: rgba(255,255,255,0.4); font-size: 14px; line-height: 1.5; }
+
+    /* Skeleton de carregamento (brilho passando) */
+    @keyframes sk-shimmer { 0% { background-position: -320px 0; } 100% { background-position: 320px 0; } }
+    .sk {
+      background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.11) 37%, rgba(255,255,255,0.05) 63%);
+      background-size: 640px 100%;
+      animation: sk-shimmer 1.3s ease-in-out infinite;
+      border-radius: 8px;
+    }
+    .sk-pessoa { display: flex; align-items: center; gap: 14px; margin-bottom: 8px; }
+    .sk-av { width: 60px; height: 60px; border-radius: 30px; flex-shrink: 0; }
+    .sk-linha { height: 13px; }
+    .sk-item { height: 62px; border-radius: 14px; margin-bottom: 10px; }
+    .sk-quad { width: 132px; height: 132px; border-radius: 14px; flex-shrink: 0; }
     .maisapp { color: rgba(255,255,255,0.3); font-size: 12px; margin-top: 8px; }
 
     .abrir-link {
@@ -126,7 +140,23 @@
   <div class="wrap">
     <div class="marca">ALVØ</div>
     <div id="conteudo">
-      <div class="vazio">Carregando…</div>
+      <div class="sk-pessoa">
+        <div class="sk sk-av"></div>
+        <div style="flex:1;">
+          <div class="sk sk-linha" style="width:55%; margin-bottom:9px;"></div>
+          <div class="sk sk-linha" style="width:30%; height:11px;"></div>
+        </div>
+      </div>
+      <div class="sk sk-linha" style="width:40%; height:11px; margin:28px 0 14px;"></div>
+      <div class="sk sk-item"></div>
+      <div class="sk sk-item"></div>
+      <div class="sk sk-item"></div>
+      <div class="sk sk-linha" style="width:32%; height:11px; margin:28px 0 14px;"></div>
+      <div style="display:flex; gap:12px; overflow:hidden;">
+        <div class="sk sk-quad"></div>
+        <div class="sk sk-quad"></div>
+        <div class="sk sk-quad"></div>
+      </div>
     </div>
     <a id="abrir" class="abrir-link" href="alvo://" style="display:none;">Já tem o app? Abrir</a>
   </div>
