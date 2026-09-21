@@ -3,10 +3,22 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Perfil no Alvø</title>
-  <meta property="og:title" content="Alvø — agenda de corridas" />
-  <meta property="og:description" content="Veja as próximas corridas desta pessoa no Alvø." />
+  <title>Próximas corridas no Alvø</title>
+  <meta name="description" content="Veja as próximas corridas e monte sua agenda no Alvø — rua, trail, triatlo e ciclismo." />
   <meta name="theme-color" content="#0a0a0a" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Alvø" />
+  <meta property="og:title" content="Descubra sua próxima corrida" />
+  <meta property="og:description" content="As próximas provas desta pessoa no Alvø. Baixe grátis e monte a sua agenda de corridas." />
+  <meta property="og:image" content="https://alvoapp.com.br/og-perfil.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Descubra sua próxima corrida" />
+  <meta name="twitter:description" content="As próximas provas desta pessoa no Alvø. Baixe grátis e monte a sua agenda de corridas." />
+  <meta name="twitter:image" content="https://alvoapp.com.br/og-perfil.png" />
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body {
@@ -66,7 +78,9 @@
 
     .vazio { color: rgba(255,255,255,0.4); font-size: 14px; line-height: 1.5; }
 
-    .acoes { margin-top: 28px; }
+    .acoes { margin-top: 34px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 26px; }
+    .cta-titulo { font-size: 18px; font-weight: 800; margin-bottom: 6px; }
+    .cta-sub { color: rgba(255,255,255,0.5); font-size: 13px; line-height: 1.5; margin-bottom: 18px; }
     .btn {
       display: block; width: 100%;
       padding: 15px 20px; border-radius: 14px;
@@ -85,9 +99,11 @@
       <div class="vazio">Carregando…</div>
     </div>
     <div class="acoes">
-      <a id="abrir" class="btn btn-primary" href="alvo://">Abrir no Alvø</a>
-      <a class="btn btn-secondary" href="https://apps.apple.com/app/id6780298704">Baixar na App Store</a>
-      <div class="hint">Agenda de corridas de rua, trail, triatlo e ciclismo.</div>
+      <div class="cta-titulo">Monte sua agenda de corridas</div>
+      <div class="cta-sub">Descubra provas de rua, trail, triatlo e ciclismo, marque seus alvos e veja quem vai correr com você.</div>
+      <a class="btn btn-primary" href="https://apps.apple.com/app/id6780298704">Baixar o Alvø — grátis</a>
+      <a id="abrir" class="btn btn-secondary" href="alvo://">Já tenho o app — abrir</a>
+      <div class="hint">Grátis · para iPhone</div>
     </div>
   </div>
 
