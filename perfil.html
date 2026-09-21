@@ -4,20 +4,20 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Próximas corridas no Alvø</title>
-  <meta name="description" content="Veja as próximas corridas e monte sua agenda no Alvø — rua, trail, triatlo e ciclismo." />
+  <meta name="description" content="Veja as próximas corridas e as conquistas desta pessoa no Alvø — rua, trail, triatlo e ciclismo." />
   <meta name="theme-color" content="#0a0a0a" />
 
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Alvø" />
   <meta property="og:title" content="Descubra sua próxima corrida" />
-  <meta property="og:description" content="As próximas provas desta pessoa no Alvø. Baixe grátis e monte a sua agenda de corridas." />
+  <meta property="og:description" content="As próximas provas e conquistas desta pessoa no Alvø. Baixe grátis e monte a sua agenda de corridas." />
   <meta property="og:image" content="https://alvoapp.com.br/og-perfil.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Descubra sua próxima corrida" />
-  <meta name="twitter:description" content="As próximas provas desta pessoa no Alvø. Baixe grátis e monte a sua agenda de corridas." />
+  <meta name="twitter:description" content="As próximas provas e conquistas desta pessoa no Alvø. Baixe grátis e monte a sua agenda de corridas." />
   <meta name="twitter:image" content="https://alvoapp.com.br/og-perfil.png" />
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -28,7 +28,8 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       -webkit-font-smoothing: antialiased;
     }
-    .wrap { max-width: 420px; margin: 0 auto; padding: 28px 22px 40px; }
+    /* padding-bottom deixa espaço pro banner fixo não cobrir o conteúdo */
+    .wrap { max-width: 420px; margin: 0 auto; padding: 28px 22px 120px; }
     .marca { color: #C0E030; font-size: 15px; font-weight: 900; letter-spacing: 2px; margin-bottom: 26px; }
 
     .pessoa { display: flex; align-items: center; gap: 14px; margin-bottom: 8px; }
@@ -53,7 +54,6 @@
       background: rgba(255,255,255,0.05); border-radius: 14px;
       padding: 12px; margin-bottom: 10px;
     }
-    /* separador de ano: so aparece quando a lista cruza de um ano pro outro */
     .ano {
       display: flex; align-items: center; gap: 10px;
       margin: 18px 0 12px;
@@ -67,7 +67,6 @@
     .data .dia { color: #C0E030; font-size: 18px; font-weight: 900; line-height: 1.1; }
     .data .mes { color: #C0E030; font-size: 9px; font-weight: 800; letter-spacing: 0.5px; }
     .info { min-width: 0; flex: 1; }
-    /* nome quebra em ate 2 linhas em vez de cortar no "..." */
     .info .n { font-size: 14px; font-weight: 700; line-height: 1.3; }
     .info .l { color: rgba(255,255,255,0.4); font-size: 12px; margin-top: 3px; }
     .dist {
@@ -76,20 +75,51 @@
       color: rgba(255,255,255,0.75); flex-shrink: 0;
     }
 
-    .vazio { color: rgba(255,255,255,0.4); font-size: 14px; line-height: 1.5; }
-
-    .acoes { margin-top: 34px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 26px; }
-    .cta-titulo { font-size: 18px; font-weight: 800; margin-bottom: 6px; }
-    .cta-sub { color: rgba(255,255,255,0.5); font-size: 13px; line-height: 1.5; margin-bottom: 18px; }
-    .btn {
-      display: block; width: 100%;
-      padding: 15px 20px; border-radius: 14px;
-      font-size: 16px; font-weight: 800; text-decoration: none;
-      text-align: center; margin-bottom: 12px;
+    /* Conquistas: fileira horizontal de medalhas */
+    .conq-row {
+      display: flex; gap: 12px; overflow-x: auto; padding-bottom: 6px;
+      -webkit-overflow-scrolling: touch; scrollbar-width: none;
     }
-    .btn-primary { background: #C0E030; color: #0a0a0a; }
-    .btn-secondary { background: rgba(255,255,255,0.08); color: #fff; border: 1px solid rgba(255,255,255,0.15); }
-    .hint { color: rgba(255,255,255,0.3); font-size: 12px; text-align: center; margin-top: 6px; }
+    .conq-row::-webkit-scrollbar { display: none; }
+    .conq { width: 132px; flex-shrink: 0; }
+    .conq-foto {
+      width: 132px; height: 132px; border-radius: 14px; margin-bottom: 8px;
+      object-fit: cover; display: block;
+    }
+    .conq-foto-ph {
+      display: flex; align-items: center; justify-content: center; font-size: 40px;
+      background: linear-gradient(135deg, rgba(192,224,48,0.22), rgba(192,224,48,0.06));
+    }
+    .conq-nome { font-size: 12px; font-weight: 700; line-height: 1.35; margin-bottom: 3px; }
+    .conq-perf { color: #C0E030; font-size: 11px; font-weight: 700; margin-bottom: 2px; }
+    .conq-data { color: rgba(255,255,255,0.35); font-size: 11px; }
+
+    .vazio { color: rgba(255,255,255,0.4); font-size: 14px; line-height: 1.5; }
+    .maisapp { color: rgba(255,255,255,0.3); font-size: 12px; margin-top: 8px; }
+
+    .abrir-link {
+      display: inline-block; margin-top: 26px;
+      color: rgba(255,255,255,0.55); font-size: 14px; text-decoration: underline;
+    }
+
+    /* Banner fixo de download */
+    .banner {
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 50;
+      display: flex; align-items: center; gap: 14px;
+      padding: 14px 18px calc(14px + env(safe-area-inset-bottom));
+      background: rgba(14,14,14,0.94);
+      backdrop-filter: saturate(160%) blur(12px);
+      -webkit-backdrop-filter: saturate(160%) blur(12px);
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .banner-txt { flex: 1; min-width: 0; }
+    .banner-t { font-size: 15px; font-weight: 800; }
+    .banner-s { color: rgba(255,255,255,0.45); font-size: 12px; margin-top: 1px; }
+    .banner-btn {
+      flex-shrink: 0; background: #C0E030; color: #0a0a0a;
+      padding: 12px 22px; border-radius: 12px;
+      font-size: 15px; font-weight: 800; text-decoration: none;
+    }
   </style>
 </head>
 <body>
@@ -98,28 +128,36 @@
     <div id="conteudo">
       <div class="vazio">Carregando…</div>
     </div>
-    <div class="acoes">
-      <div class="cta-titulo">Monte sua agenda de corridas</div>
-      <div class="cta-sub">Descubra provas de rua, trail, triatlo e ciclismo, marque seus alvos e veja quem vai correr com você.</div>
-      <a class="btn btn-primary" href="https://apps.apple.com/app/id6780298704">Baixar o Alvø — grátis</a>
-      <a id="abrir" class="btn btn-secondary" href="alvo://">Já tenho o app — abrir</a>
-      <div class="hint">Grátis · para iPhone</div>
+    <a id="abrir" class="abrir-link" href="alvo://" style="display:none;">Já tem o app? Abrir</a>
+  </div>
+
+  <div class="banner">
+    <div class="banner-txt">
+      <div class="banner-t">Baixe o Alvø</div>
+      <div class="banner-s">Grátis · para iPhone</div>
     </div>
+    <a class="banner-btn" href="https://apps.apple.com/app/id6780298704">Baixar</a>
   </div>
 
   <script>
   (function () {
     // Chave pública (anon) — a mesma que vai dentro do app. As políticas do banco
-    // é que decidem o que ela enxerga: só perfis e provas públicas do catálogo.
+    // é que decidem o que ela enxerga: só perfis, provas do catálogo, alvos e
+    // conquistas públicas.
     var SB = "https://smibeuvxyrvtezktqsqq.supabase.co";
     var KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNtaWJldXZ4eXJ2dGV6a3Rxc3FxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgxMTA2MDEsImV4cCI6MjA5MzY4NjYwMX0.qEUXzWW0DGui-BXSCflSeu9dyBiRuntiwStfYM74_tw";
     var MESES = ["", "JAN", "FEV", "MAR", "ABR", "MAI", "JUN", "JUL", "AGO", "SET", "OUT", "NOV", "DEZ"];
     var MAX = 8;
+    var MAX_CONQ = 10;
 
     var conteudo = document.getElementById("conteudo");
     var usuario = (new URLSearchParams(location.search).get("u") || "").replace(/[^A-Za-z0-9_.-]/g, "");
 
-    if (usuario) document.getElementById("abrir").setAttribute("href", "alvo://perfil/" + usuario);
+    if (usuario) {
+      var abrir = document.getElementById("abrir");
+      abrir.setAttribute("href", "alvo://perfil/" + usuario);
+      abrir.style.display = "inline-block";
+    }
 
     function esc(s) {
       return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
@@ -137,10 +175,23 @@
       conteudo.innerHTML = '<div class="vazio">' + esc(msg) + "</div>";
     }
 
+    function fmtKm(km) {
+      if (km == null) return "";
+      var n = Math.round(km * 10) / 10;
+      return String(n).replace(".", ",") + " km";
+    }
+
+    function fmtDataCurta(iso) {
+      var p = iso.split("-");
+      return parseInt(p[2], 10) + " " + (MESES[parseInt(p[1], 10)] || "").toLowerCase() + " " + p[0];
+    }
+
     if (!usuario) {
       erro("Perfil não encontrado.");
       return;
     }
+
+    var hoje = new Date().toISOString().split("T")[0];
 
     api("profiles?usuario=eq." + encodeURIComponent(usuario) + "&select=id,nome,usuario,avatar_url&limit=1")
       .then(function (perfis) {
@@ -157,41 +208,55 @@
           '<div><div class="nome">' + esc(p.nome || "Corredor") + "</div>" +
           '<div class="usuario">@' + esc(p.usuario) + "</div></div></div>";
 
-        var hoje = new Date().toISOString().split("T")[0];
-
-        return api("user_provas?user_id=eq." + p.id + "&alvo=eq.true&select=prova_id,distancia_alvo")
+        // Próximos alvos
+        var pAlvos = api("user_provas?user_id=eq." + p.id + "&alvo=eq.true&select=prova_id,distancia_alvo")
           .then(function (ups) {
-            if (!ups || !ups.length) return { cabecalho: cabecalho, provas: [], dist: {} };
+            if (!ups || !ups.length) return { provas: [], dist: {} };
             var dist = {};
             var ids = ups.map(function (u) { dist[u.prova_id] = u.distancia_alvo; return u.prova_id; });
-            // Provas privadas de outra pessoa não voltam nessa consulta (a política
-            // do banco as esconde) — some da lista sem quebrar nada.
             return api(
               "provas?id=in.(" + ids.join(",") + ")&data=gte." + hoje +
               "&select=id,nome,cidade,pais,data&order=data.asc"
+            ).then(function (provas) { return { provas: provas || [], dist: dist }; });
+          });
+
+        // Conquistas (provas concluídas, com medalha)
+        var pConq = api("user_provas?user_id=eq." + p.id + "&status=eq.concluido&select=prova_id,tempo,distancia_km,medal_photo_url")
+          .then(function (ups) {
+            if (!ups || !ups.length) return [];
+            var meta = {};
+            var ids = ups.map(function (u) { meta[u.prova_id] = u; return u.prova_id; });
+            return api(
+              "provas?id=in.(" + ids.join(",") + ")&select=id,nome,cidade,data&order=data.desc"
             ).then(function (provas) {
-              return { cabecalho: cabecalho, provas: provas || [], dist: dist };
+              return (provas || []).map(function (pr) {
+                return { prova: pr, up: meta[pr.id] };
+              });
             });
           });
+
+        return Promise.all([pAlvos, pConq]).then(function (res) {
+          return { cabecalho: cabecalho, alvos: res[0], conquistas: res[1] };
+        });
       })
       .then(function (r) {
         var html = r.cabecalho;
-        if (!r.provas.length) {
+
+        // --- Próximos alvos ---
+        var provas = r.alvos.provas, dist = r.alvos.dist;
+        if (!provas.length) {
           html += '<div class="titulo">Próximos alvos</div>' +
                   '<div class="vazio">Nenhuma corrida marcada por enquanto.</div>';
         } else {
-          html += '<div class="titulo">' +
-                  (r.provas.length === 1 ? "Próximo alvo" : "Próximos alvos") + "</div>";
-          var mostradas = r.provas.slice(0, MAX);
-          // Só marca o ano quando a lista atravessa mais de um: numa lista toda
-          // de 2026 o rótulo seria ruído.
+          html += '<div class="titulo">' + (provas.length === 1 ? "Próximo alvo" : "Próximos alvos") + "</div>";
+          var mostradas = provas.slice(0, MAX);
           var varios = mostradas.some(function (p) {
             return p.data.slice(0, 4) !== mostradas[0].data.slice(0, 4);
           });
           var anoAtual = null;
           mostradas.forEach(function (p) {
             var partes = p.data.split("-");
-            var d = r.dist[p.id];
+            var d = dist[p.id];
             if (varios && partes[0] !== anoAtual) {
               anoAtual = partes[0];
               html += '<div class="ano">' + anoAtual + "</div>";
@@ -205,10 +270,35 @@
                 (d ? '<div class="dist">' + esc(d) + "</div>" : "") +
               "</div>";
           });
-          if (r.provas.length > MAX) {
-            html += '<div class="hint">e mais ' + (r.provas.length - MAX) + " no app</div>";
+          if (provas.length > MAX) {
+            html += '<div class="maisapp">e mais ' + (provas.length - MAX) + " no app</div>";
           }
         }
+
+        // --- Conquistas ---
+        var conq = r.conquistas;
+        if (conq.length) {
+          html += '<div class="titulo">Conquistas · ' + conq.length + "</div>";
+          html += '<div class="conq-row">';
+          conq.slice(0, MAX_CONQ).forEach(function (c) {
+            var pr = c.prova, up = c.up;
+            var foto = up.medal_photo_url
+              ? '<img class="conq-foto" src="' + esc(up.medal_photo_url) + '" alt="" loading="lazy">'
+              : '<div class="conq-foto conq-foto-ph">🏅</div>';
+            var perf = [fmtKm(up.distancia_km), up.tempo].filter(Boolean).join(" · ");
+            html +=
+              '<div class="conq">' + foto +
+                '<div class="conq-nome">' + esc(pr.nome) + "</div>" +
+                (perf ? '<div class="conq-perf">' + esc(perf) + "</div>" : "") +
+                '<div class="conq-data">' + esc(fmtDataCurta(pr.data)) + "</div>" +
+              "</div>";
+          });
+          html += "</div>";
+          if (conq.length > MAX_CONQ) {
+            html += '<div class="maisapp">e mais ' + (conq.length - MAX_CONQ) + " no app</div>";
+          }
+        }
+
         conteudo.innerHTML = html;
       })
       .catch(function () {
